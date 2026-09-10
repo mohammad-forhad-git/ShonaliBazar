@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সোনালী বাজার — খাঁটি ড্রাই ফ্রুটস</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hind+Siliguri:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F6EEDD;
+    --bg-warm: #EFE1C4;
+    --ink: #33251A;
+    --brown: #4A2E1F;
+    --gold: #B9812E;
+    --gold-deep: #8F5F1E;
+    --maroon: #7A2E2A;
+    --olive: #5F6B44;
+    --card: #FFFBF3;
+    --line: rgba(51,37,26,0.14);
+    --radius-lg: 22px;
+    --radius-sm: 10px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Hind Siliguri','Work Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3, .display{
+    font-family:'Fraunces','Hind Siliguri',serif;
+    color:var(--brown);
+    line-height:1.15;
+  }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(246,238,221,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px; max-width:1100px; margin:0 auto;
+  }
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-mark{width:38px; height:38px; flex-shrink:0;}
+  .logo-text{font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem; color:var(--brown);}
+  .logo-sub{font-size:0.68rem; color:var(--gold-deep); letter-spacing:0.02em;}
+  nav{display:flex; align-items:center; gap:22px;}
+  nav a{font-size:0.95rem; font-weight:500; color:var(--ink); opacity:0.85;}
+  nav a:hover{opacity:1; color:var(--maroon);}
+  .cart-btn{
+    display:flex; align-items:center; gap:8px;
+    background:var(--brown); color:var(--bg);
+    padding:9px 16px; border-radius:30px; font-weight:600; font-size:0.9rem;
+    position:relative;
+  }
+  .cart-count{
+    background:var(--maroon); color:#fff; font-size:0.72rem; font-weight:700;
+    width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .nav-links-mobile{display:none;}
+
+  /* Hero */
+  .hero{
+    padding:64px 20px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1100px; margin:0 auto;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;
+  }
+  .hero h1{font-size:clamp(2.1rem, 4vw, 3.1rem); font-weight:600; margin-bottom:18px;}
+  .hero p{font-size:1.05rem; color:var(--ink); opacity:0.82; max-width:38ch; margin-bottom:28px; line-height:1.65;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--maroon); color:#fff; padding:14px 26px; border-radius:30px;
+    font-weight:600; font-size:0.98rem;
+  }
+  .btn-ghost{
+    background:transparent; color:var(--brown); padding:14px 22px; border-radius:30px;
+    font-weight:600; font-size:0.98rem; border:1.5px solid var(--brown);
+  }
+  .hero-badges{display:flex; gap:26px; margin-top:34px; flex-wrap:wrap;}
+  .hero-badge{font-size:0.85rem; color:var(--brown); display:flex; align-items:center; gap:8px;}
+  .hero-badge svg{width:20px; height:20px; flex-shrink:0;}
+  .hero-art{position:relative;}
+
+  /* Category strip */
+  .cat-strip{padding:8px 20px 40px;}
+  .cat-scroll{
+    max-width:1100px; margin:0 auto;
+    display:flex; gap:14px; overflow-x:auto; padding:6px 2px 14px;
+    scrollbar-width:none;
+  }
+  .cat-scroll::-webkit-scrollbar{display:none;}
+  .cat-pill{
+    flex-shrink:0;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:30px; padding:10px 20px 10px 12px;
+    display:flex; align-items:center; gap:10px;
+    font-weight:600; font-size:0.9rem;
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .cat-pill.active{background:var(--brown); color:var(--bg); border-color:var(--brown);}
+  .cat-pill:hover{transform:translateY(-2px);}
+  .cat-pill .ico{width:30px; height:30px; border-radius:50%; background:var(--gold); flex-shrink:0; display:flex; align-items:center; justify-content:center;}
+  .cat-pill .ico svg{width:18px; height:18px;}
+
+  /* Products */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    max-width:1100px; margin:0 auto 26px; padding:0 20px;
+  }
+  .section-head h2{font-size:1.7rem; font-weight:600;}
+  .products{
+    max-width:1100px; margin:0 auto; padding:0 20px 70px;
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  .card{
+    background:var(--card); border-radius:var(--radius-lg);
+    padding:20px; border:1px solid var(--line);
+    display:flex; flex-direction:column; gap:12px;
+    transition:box-shadow .2s ease;
+  }
+  .card:hover{box-shadow:0 10px 28px rgba(74,46,31,0.12);}
+  .card-art{
+    background:var(--bg-warm); border-radius:var(--radius-sm);
+    height:150px; display:flex; align-items:center; justify-content:center;
+  }
+  .card-art svg{width:76px; height:76px;}
+  .card h3{font-size:1.15rem; font-weight:600;}
+  .card .cat-label{font-size:0.78rem; color:var(--gold-deep); font-weight:600;}
+  .card p.desc{font-size:0.87rem; color:var(--ink); opacity:0.72; line-height:1.5;}
+  .weight-row{display:flex; gap:8px; margin-top:2px;}
+  .weight-opt{
+    flex:1; text-align:center; padding:8px 4px; border-radius:8px;
+    border:1px solid var(--line); font-size:0.78rem; font-weight:600;
+    background:transparent;
+  }
+  .weight-opt.active{background:var(--gold); color:#fff; border-color:var(--gold);}
+  .card-bottom{display:flex; align-items:center; justify-content:space-between; margin-top:4px;}
+  .price{font-family:'Fraunces',serif; font-size:1.3rem; font-weight:600; color:var(--maroon);}
+  .add-btn{
+    background:var(--brown); color:var(--bg); padding:10px 18px; border-radius:24px;
+    font-weight:600; font-size:0.85rem;
+  }
+  .add-btn:active{transform:scale(0.96);}
+
+  /* About strip */
+  .about{background:var(--brown); color:var(--bg); padding:60px 20px;}
+  .about-inner{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
+  .about h2{color:var(--bg); font-size:1.9rem; margin-bottom:16px;}
+  .about p{opacity:0.85; line-height:1.7; max-width:42ch;}
+  .about-stats{display:flex; gap:34px; margin-top:28px;}
+  .stat b{display:block; font-family:'Fraunces',serif; font-size:1.8rem; color:var(--gold);}
+  .stat span{font-size:0.82rem; opacity:0.75;}
+
+  /* Footer */
+  footer{padding:44px 20px 30px; text-align:center;}
+  footer p{font-size:0.85rem; opacity:0.6; margin-top:6px;}
+  .foot-logo{font-family:'Fraunces',serif; font-size:1.2rem; color:var(--brown); font-weight:600;}
+
+  /* Cart drawer */
+  .overlay{
+    position:fixed; inset:0; background:rgba(51,37,26,0.45);
+    opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:50;
+  }
+  .overlay.open{opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; right:0; height:100%; width:420px; max-width:92vw;
+    background:var(--bg); z-index:60;
+    transform:translateX(100%); transition:transform .3s ease;
+    display:flex; flex-direction:column;
+    box-shadow:-8px 0 30px rgba(0,0,0,0.15);
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{
+    padding:20px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .drawer-head h3{font-size:1.25rem;}
+  .close-btn{background:transparent; font-size:1.4rem; color:var(--brown); line-height:1;}
+  .drawer-body{flex:1; overflow-y:auto; padding:16px 20px;}
+  .cart-item{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .cart-item-art{width:56px; height:56px; background:var(--bg-warm); border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center;}
+  .cart-item-art svg{width:32px; height:32px;}
+  .cart-item-info{flex:1;}
+  .cart-item-info h4{font-size:0.95rem; font-weight:600;}
+  .cart-item-info .meta{font-size:0.78rem; opacity:0.65; margin:2px 0 8px;}
+  .qty-row{display:flex; align-items:center; gap:10px;}
+  .qty-btn{width:26px; height:26px; border-radius:50%; border:1px solid var(--line); background:var(--card); font-weight:700;}
+  .qty-num{font-weight:600; min-width:16px; text-align:center;}
+  .remove-btn{margin-left:auto; font-size:0.78rem; color:var(--maroon); font-weight:600; background:transparent;}
+  .cart-item-price{font-weight:600; color:var(--maroon); white-space:nowrap;}
+  .empty-cart{text-align:center; padding:60px 10px; opacity:0.6;}
+
+  .drawer-foot{padding:18px 20px 22px; border-top:1px solid var(--line);}
+  .total-row{display:flex; justify-content:space-between; font-size:1.05rem; font-weight:700; margin-bottom:14px;}
+  .checkout-btn{
+    width:100%; background:var(--maroon); color:#fff; padding:14px; border-radius:30px;
+    font-weight:700; font-size:1rem;
+  }
+  .checkout-btn:disabled{opacity:0.4;}
+
+  /* Checkout form */
+  .form-group{margin-bottom:14px;}
+  .form-group label{display:block; font-size:0.85rem; font-weight:600; margin-bottom:6px;}
+  .form-group input, .form-group textarea{
+    width:100%; padding:11px 13px; border-radius:10px; border:1px solid var(--line);
+    background:var(--card); font-family:inherit; font-size:0.92rem; color:var(--ink);
+  }
+  .form-group textarea{resize:vertical; min-height:64px;}
+  .pay-note{
+    font-size:0.8rem; background:var(--bg-warm); padding:10px 12px; border-radius:10px;
+    margin-bottom:16px; line-height:1.5;
+  }
+  .back-link{font-size:0.85rem; font-weight:600; color:var(--gold-deep); margin-bottom:14px; display:inline-block;}
+
+  @media (max-width: 860px){
+    .hero-inner{grid-template-columns:1fr; gap:30px;}
+    .products{grid-template-columns:repeat(2, 1fr);}
+    .about-inner{grid-template-columns:1fr;}
+    nav{display:none;}
+    .drawer{width:100%; max-width:100%;}
+  }
+  @media (max-width: 520px){
+    .products{grid-template-columns:1fr 1fr; gap:14px;}
+    .card-art{height:110px;}
+    .card-art svg{width:52px; height:52px;}
+    .hero{padding:44px 16px 40px;}
+    .hero-badges{gap:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="#8F5F1E"/>
+        <path d="M13 24c0-6 3-11 7-13 4 2 7 7 7 13a7 7 0 0 1-14 0Z" fill="#F6EEDD"/>
+        <path d="M20 11c0 0 1 3 1 5" stroke="#5F6B44" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="logo-text">সোনালী বাজার</div>
+        <div class="logo-sub">খাঁটি ড্রাই ফ্রুটস, সরাসরি বাগান থেকে</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#products">প্রোডাক্ট</a>
+      <a href="#about">আমাদের কথা</a>
+      <a href="#contact">যোগাযোগ</a>
+    </nav>
+    <button class="cart-btn" onclick="openCart()">
+      কার্ট <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>বাড়ির কাছে বাজার থেকে<br>নিশ্চিন্তে খাঁটি বাদাম, খেজুর আর কিশমিশ</h1>
+      <p>প্রতিটা প্যাকেট নিজে বেছে, ওজন করে, হাতে প্যাক করা হয় — কোনো মধ্যস্বত্বভোগী নেই, তাই দাম যেমন কম, তেমনি মান খাঁটি।</p>
+      <div class="hero-ctas">
+        <a href="#products" class="btn-primary">প্রোডাক্ট দেখুন</a>
+        <a href="#contact" class="btn-ghost">হোয়াটসঅ্যাপে কথা বলুন</a>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#5F6B44" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ১০০% খাঁটি, কোনো ভেজাল নেই
+        </div>
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#5F6B44" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ক্যাশ অন ডেলিভারি
+        </div>
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#5F6B44" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ঢাকার ভেতরে ২৪ ঘণ্টায় ডেলিভারি
+        </div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 340 300" width="100%">
+        <ellipse cx="170" cy="270" rx="140" ry="16" fill="#4A2E1F" opacity="0.08"/>
+        <path d="M60 220 C40 140 90 90 170 90 C250 90 300 140 280 220 Z" fill="#EFE1C4" stroke="#4A2E1F" stroke-width="2"/>
+        <circle cx="115" cy="170" r="16" fill="#B9812E"/>
+        <circle cx="150" cy="150" r="14" fill="#7A2E2A"/>
+        <circle cx="185" cy="175" r="17" fill="#8F5F1E"/>
+        <circle cx="220" cy="150" r="13" fill="#5F6B44"/>
+        <circle cx="140" cy="195" r="12" fill="#7A2E2A"/>
+        <circle cx="200" cy="200" r="15" fill="#B9812E"/>
+        <circle cx="170" cy="140" r="11" fill="#EFE1C4" stroke="#4A2E1F" stroke-width="1.5"/>
+        <circle cx="240" cy="185" r="12" fill="#EFE1C4" stroke="#4A2E1F" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="cat-strip">
+  <div class="cat-scroll" id="catStrip"></div>
+</div>
+
+<div id="products">
+  <div class="section-head">
+    <h2>আমাদের প্রোডাক্ট</h2>
+  </div>
+  <div class="products" id="productGrid"></div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div>
+      <h2>কেন সোনালী বাজার থেকে কিনবেন</h2>
+      <p>আমরা প্রতিটা চালান নিজে বেছে আনি, দোকানে বসে ওজন করে প্যাক করি। কোনো পুরনো বা বাসি মাল রাখি না — যা আজ আসে, তা আজই তাজা।</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat"><b>৫+</b><span>বছরের অভিজ্ঞতা</span></div>
+      <div class="stat"><b>২০০০+</b><span>সন্তুষ্ট ক্রেতা</span></div>
+      <div class="stat"><b>৬৪</b><span>জেলায় ডেলিভারি</span></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="foot-logo">সোনালী বাজার</div>
+  <p>ফোন / হোয়াটসঅ্যাপ: ০১৭XXXXXXXX &nbsp;•&nbsp; ঢাকা, বাংলাদেশ</p>
+  <p>© ২০২৬ সোনালী বাজার। সকল স্বত্ব সংরক্ষিত।</p>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div id="cartView">
+    <div class="drawer-head">
+      <h3>আপনার কার্ট</h3>
+      <button class="close-btn" onclick="closeCart()">×</button>
+    </div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot">
+      <div class="total-row"><span>মোট</span><span id="cartTotal">৳০</span></div>
+      <button class="checkout-btn" id="checkoutBtn" onclick="showCheckout()">অর্ডার করুন</button>
+    </div>
+  </div>
+
+  <div id="checkoutView" style="display:none; flex:1; overflow-y:auto; padding:20px;">
+    <a class="back-link" onclick="showCart()">← কার্টে ফিরে যান</a>
+    <h3 style="margin-bottom:16px;">ডেলিভারি তথ্য</h3>
+    <div class="form-group">
+      <label>নাম</label>
+      <input type="text" id="custName" placeholder="আপনার নাম">
+    </div>
+    <div class="form-group">
+      <label>মোবাইল নম্বর</label>
+      <input type="tel" id="custPhone" placeholder="017XXXXXXXX">
+    </div>
+    <div class="form-group">
+      <label>সম্পূর্ণ ঠিকানা</label>
+      <textarea id="custAddress" placeholder="বাসা/রোড/এলাকা/শহর"></textarea>
+    </div>
+    <div class="form-group">
+      <label>বিশেষ নির্দেশনা (ঐচ্ছিক)</label>
+      <textarea id="custNote" placeholder="যেমন: সন্ধ্যার পর ডেলিভারি দিন"></textarea>
+    </div>
+    <div class="pay-note">পেমেন্ট: ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দেবেন। "হোয়াটসঅ্যাপে অর্ডার পাঠান" চাপলে আপনার অর্ডারের তালিকা সহ একটা মেসেজ রেডি হয়ে যাবে, শুধু পাঠিয়ে দেবেন।</div>
+    <button class="checkout-btn" onclick="sendWhatsapp()">হোয়াটসঅ্যাপে অর্ডার পাঠান</button>
+  </div>
+</div>
+
+<script>
+// ---------- Product data comes from a Google Sheet (client edits the Sheet, no code needed) ----------
+const WHATSAPP_NUMBER = "8801404254457"; // TODO: client-এর আসল WhatsApp নম্বর দিয়ে বদলে দিতে হবে
+
+// TODO: File > Share > "Publish to web" > CSV থেকে পাওয়া লিংক এখানে বসাও
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQOIA4LNTEsM5OM-XXWyKv1XbmPcopo6KVg7Ki-TyS8FRASetzwoS1NbBgQjCcsmCaK0Wr3MmJDXab_/pub?output=csv";
+
+const genericIcon = `<circle cx="12" cy="12" r="9" fill="#fff"/><path d="M8 15c0-4 1.5-7 4-8 2.5 1 4 4 4 8a4 4 0 0 1-8 0Z" fill="#8F5F1E"/>`;
+
+let categories = [{ name: "সবগুলো" }];
+let products = [];
+let activeCat = "সবগুলো";
+let selectedWeight = {}; // productId -> weight key
+let cart = []; // {id, name, weight, price, qty}
+
+function fmt(n){ return "৳" + Number(n).toLocaleString("en-BD"); }
+
+// simple CSV parser that handles quoted fields (Google Sheets' published CSV format)
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  for(let i=0; i<text.length; i++){
+    const ch = text[i], next = text[i+1];
+    if(inQuotes){
+      if(ch === '"' && next === '"'){ field += '"'; i++; }
+      else if(ch === '"'){ inQuotes = false; }
+      else{ field += ch; }
+    } else {
+      if(ch === '"'){ inQuotes = true; }
+      else if(ch === ','){ row.push(field); field = ""; }
+      else if(ch === '\n' || ch === '\r'){
+        if(field !== "" || row.length){ row.push(field); rows.push(row); row = []; field = ""; }
+        if(ch === '\r' && next === '\n') i++;
+      } else { field += ch; }
+    }
+  }
+  if(field !== "" || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(r => r.length && r.some(c => c.trim() !== ""));
+}
+
+async function fetchProducts(){
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = `<p style="grid-column:1/-1; opacity:0.6;">প্রোডাক্ট লোড হচ্ছে…</p>`;
+  try{
+    const res = await fetch(SHEET_CSV_URL + "&t=" + Date.now());
+    if(!res.ok) throw new Error("fetch failed");
+    const text = await res.text();
+    const rows = parseCSV(text);
+    const header = rows[0].map(h => h.trim().toLowerCase());
+    const idx = (key) => header.indexOf(key);
+
+    products = rows.slice(1).map((r, i) => {
+      const active = (r[idx("active")] || "yes").trim().toLowerCase();
+      if(active === "no" || active === "না") return null;
+      const prices = {};
+      ["250","500","1000"].forEach(wt => {
+        const val = parseFloat(r[idx("price_"+wt)]);
+        if(!isNaN(val) && val > 0) prices[wt] = val;
+      });
+      if(Object.keys(prices).length === 0) return null;
+      return {
+        id: i+1,
+        cat: (r[idx("category")] || "অন্যান্য").trim(),
+        name: (r[idx("name")] || "").trim(),
+        desc: (r[idx("description")] || "").trim(),
+        image: (r[idx("image_url")] || "").trim(),
+        prices,
+      };
+    }).filter(Boolean);
+
+    const catNames = [...new Set(products.map(p => p.cat))];
+    categories = [{ name: "সবগুলো" }, ...catNames.map(name => ({ name }))];
+
+    renderCategories();
+    renderProducts();
+  } catch(err){
+    grid.innerHTML = `<p style="grid-column:1/-1; opacity:0.7;">প্রোডাক্ট লোড করা যায়নি। Google Sheet লিংকটা ঠিক আছে কিনা দেখুন, অথবা ডেভেলপারকে জানান।</p>`;
+  }
+}
+
+function renderCategories(){
+  const strip = document.getElementById("catStrip");
+  strip.innerHTML = categories.map(c => `
+    <button class="cat-pill ${c.name===activeCat?'active':''}" onclick="setCat('${c.name.replace(/'/g,"\\'")}')">
+      <span class="ico"><svg viewBox="0 0 24 24">${genericIcon}</svg></span>
+      ${c.name}
+    </button>
+  `).join("");
+}
+
+function setCat(name){
+  activeCat = name;
+  renderCategories();
+  renderProducts();
+}
+
+function renderProducts(){
+  const grid = document.getElementById("productGrid");
+  const list = activeCat === "সবগুলো" ? products : products.filter(p => p.cat === activeCat);
+  if(list.length === 0){
+    grid.innerHTML = `<p style="grid-column:1/-1; opacity:0.6;">এই ক্যাটাগরিতে এখন কোনো প্রোডাক্ট নেই।</p>`;
+    return;
+  }
+  grid.innerHTML = list.map(p => {
+    const weights = Object.keys(p.prices);
+    const w = (selectedWeight[p.id] && p.prices[selectedWeight[p.id]]) ? selectedWeight[p.id] : weights[0];
+    const art = p.image
+      ? `<img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`
+      : `<svg viewBox="0 0 24 24" style="width:76px; height:76px;">${genericIcon}</svg>`;
+    return `
+    <div class="card">
+      <div class="card-art">${art}</div>
+      <div class="cat-label">${p.cat}</div>
+      <h3>${p.name}</h3>
+      <p class="desc">${p.desc}</p>
+      <div class="weight-row">
+        ${weights.map(wt => `
+          <button class="weight-opt ${w===wt?'active':''}" onclick="setWeight(${p.id}, '${wt}')">${wt==="1000"?"১ কেজি":wt+" গ্রাম"}</button>
+        `).join("")}
+      </div>
+      <div class="card-bottom">
+        <span class="price">${fmt(p.prices[w])}</span>
+        <button class="add-btn" onclick="addToCart(${p.id})">কার্টে যোগ করুন</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function setWeight(id, wt){
+  selectedWeight[id] = wt;
+  renderProducts();
+}
+
+function addToCart(id){
+  const p = products.find(x => x.id === id);
+  const weights = Object.keys(p.prices);
+  const w = (selectedWeight[id] && p.prices[selectedWeight[id]]) ? selectedWeight[id] : weights[0];
+  const price = p.prices[w];
+  const existing = cart.find(c => c.id === id && c.weight === w);
+  if(existing){ existing.qty += 1; }
+  else{ cart.push({ id, name:p.name, cat:p.cat, image:p.image, weight:w, price, qty:1 }); }
+  updateCartUI();
+  openCart();
+}
+
+function changeQty(idx, delta){
+  cart[idx].qty += delta;
+  if(cart[idx].qty <= 0) cart.splice(idx,1);
+  updateCartUI();
+}
+
+function removeItem(idx){
+  cart.splice(idx,1);
+  updateCartUI();
+}
+
+function cartTotal(){
+  return cart.reduce((sum,c) => sum + c.price*c.qty, 0);
+}
+
+function updateCartUI(){
+  const count = cart.reduce((s,c)=>s+c.qty,0);
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("cartTotal").textContent = fmt(cartTotal());
+  document.getElementById("checkoutBtn").disabled = cart.length === 0;
+
+  const body = document.getElementById("cartBody");
+  if(cart.length === 0){
+    body.innerHTML = `<div class="empty-cart">কার্ট খালি — পছন্দের কিছু যোগ করুন</div>`;
+    return;
+  }
+  body.innerHTML = cart.map((c, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-art">${c.image ? `<img src="${c.image}" alt="${c.name}" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">` : `<svg viewBox="0 0 24 24" style="width:32px; height:32px;">${genericIcon}</svg>`}</div>
+      <div class="cart-item-info">
+        <h4>${c.name}</h4>
+        <div class="meta">${c.weight==="1000"?"১ কেজি":c.weight+" গ্রাম"}</div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+          <span class="qty-num">${c.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+          <button class="remove-btn" onclick="removeItem(${idx})">সরান</button>
+        </div>
+      </div>
+      <div class="cart-item-price">${fmt(c.price*c.qty)}</div>
+    </div>
+  `).join("");
+}
+
+function openCart(){
+  document.getElementById("overlay").classList.add("open");
+  document.getElementById("drawer").classList.add("open");
+  showCart();
+}
+function closeCart(){
+  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("drawer").classList.remove("open");
+}
+function showCart(){
+  document.getElementById("cartView").style.display = "flex";
+  document.getElementById("cartView").style.flexDirection = "column";
+  document.getElementById("cartView").style.flex = "1";
+  document.getElementById("checkoutView").style.display = "none";
+}
+function showCheckout(){
+  if(cart.length === 0) return;
+  document.getElementById("cartView").style.display = "none";
+  document.getElementById("checkoutView").style.display = "block";
+}
+
+function sendWhatsapp(){
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const note = document.getElementById("custNote").value.trim();
+
+  if(!name || !phone || !address){
+    alert("দয়া করে নাম, মোবাইল নম্বর এবং ঠিকানা দিন।");
+    return;
+  }
+
+  let msg = `আসসালামু আলাইকুম, আমি সোনালী বাজার থেকে অর্ডার করতে চাই।\n\n`;
+  msg += `নাম: ${name}\nমোবাইল: ${phone}\nঠিকানা: ${address}\n`;
+  if(note) msg += `নির্দেশনা: ${note}\n`;
+  msg += `\nঅর্ডার তালিকা:\n`;
+  cart.forEach(c => {
+    const wLabel = c.weight === "1000" ? "১ কেজি" : c.weight + " গ্রাম";
+    msg += `- ${c.name} (${wLabel}) x${c.qty} = ৳${c.price*c.qty}\n`;
+  });
+  msg += `\nসর্বমোট: ৳${cartTotal()}\nপেমেন্ট: ক্যাশ অন ডেলিভারি`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+}
+
+renderCategories();
+fetchProducts();
+updateCartUI();
+</script>
+</body>
+</html>
