@@ -426,15 +426,23 @@ async function fetchProducts(){
     if(!res.ok) throw new Error("fetch failed");
     const text = await res.text();
     const rows = parseCSV(text);
-    const header = rows[0].map(h => h.trim().toLowerCase());
+    // extra title/summary rows above the real header are common in Sheets exports —
+    // find the row that actually contains "category" and "name" instead of assuming row 0
+    const headerRowIndex = rows.findIndex(r =>
+      r.some(c => c.trim().toLowerCase() === "category") &&
+      r.some(c => c.trim().toLowerCase() === "name")
+    );
+    if(headerRowIndex === -1) throw new Error("header row not found");
+    const header = rows[headerRowIndex].map(h => h.trim().toLowerCase());
     const idx = (key) => header.indexOf(key);
 
-    products = rows.slice(1).map((r, i) => {
+    products = rows.slice(headerRowIndex + 1).map((r, i) => {
       const active = (r[idx("active")] || "yes").trim().toLowerCase();
       if(active === "no" || active === "না") return null;
       const prices = {};
       ["250","500","1000"].forEach(wt => {
-        const val = parseFloat(r[idx("price_"+wt)]);
+        const raw = (r[idx("price_"+wt)] || "").replace(/[^0-9.]/g, "");
+        const val = parseFloat(raw);
         if(!isNaN(val) && val > 0) prices[wt] = val;
       });
       if(Object.keys(prices).length === 0) return null;
