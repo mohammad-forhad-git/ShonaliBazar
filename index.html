@@ -55,6 +55,21 @@
   .logo-text{font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem; color:var(--brown);}
   .logo-sub{font-size:0.68rem; color:var(--gold-deep); letter-spacing:0.02em;}
   nav{display:flex; align-items:center; gap:22px;}
+  .hamburger-btn{
+    display:none; width:40px; height:40px; align-items:center; justify-content:center;
+    background:transparent; border:1px solid var(--line); border-radius:8px; flex-shrink:0;
+  }
+  .hamburger-btn svg{width:20px; height:20px;}
+  .mobile-nav-panel{
+    display:none; flex-direction:column;
+    background:var(--bg); border-bottom:1px solid var(--line);
+    overflow:hidden; max-height:0; transition:max-height 0.3s ease;
+  }
+  .mobile-nav-panel.open{max-height:220px;}
+  .mobile-nav-panel a{
+    padding:14px 20px; font-size:0.95rem; font-weight:600; color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
   nav a{font-size:0.95rem; font-weight:500; color:var(--ink); opacity:0.85;}
   nav a:hover{opacity:1; color:var(--maroon);}
   .cart-btn{
@@ -231,6 +246,8 @@
     .products{grid-template-columns:repeat(2, 1fr);}
     .about-inner{grid-template-columns:1fr;}
     nav{display:none;}
+    .hamburger-btn{display:flex;}
+    .mobile-nav-panel{display:flex;}
     .drawer{width:100%; max-width:100%;}
   }
   @media (max-width: 520px){
@@ -239,6 +256,15 @@
     .card-art svg{width:52px; height:52px;}
     .hero{padding:44px 16px 40px;}
     .hero-badges{gap:16px;}
+    .header-inner{padding:12px 14px;}
+    .logo-sub{display:none;}
+    .cart-btn{padding:8px 12px; font-size:0.85rem;}
+  }
+  @media (max-width: 400px){
+    .products{grid-template-columns:1fr; max-width:320px; margin:0 auto;}
+    .weight-opt{font-size:0.72rem; padding:7px 2px;}
+    .logo-text{font-size:1.05rem;}
+    .hero h1{font-size:1.7rem;}
   }
 </style>
 </head>
@@ -262,9 +288,19 @@
       <a href="#about">আমাদের কথা</a>
       <a href="#contact">যোগাযোগ</a>
     </nav>
-    <button class="cart-btn" onclick="openCart()">
-      কার্ট <span class="cart-count" id="cartCount">0</span>
-    </button>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="hamburger-btn" onclick="toggleMobileNav()" id="hamburgerBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#33251A" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <button class="cart-btn" onclick="openCart()">
+        কার্ট <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav-panel" id="mobileNavPanel">
+    <a href="#products" onclick="closeMobileNav()">প্রোডাক্ট</a>
+    <a href="#about" onclick="closeMobileNav()">আমাদের কথা</a>
+    <a href="#contact" onclick="closeMobileNav()">যোগাযোগ</a>
   </div>
 </header>
 
@@ -573,6 +609,13 @@ function updateCartUI(){
       <div class="cart-item-price">${fmt(c.price*c.qty)}</div>
     </div>
   `).join("");
+}
+
+function toggleMobileNav(){
+  document.getElementById("mobileNavPanel").classList.toggle("open");
+}
+function closeMobileNav(){
+  document.getElementById("mobileNavPanel").classList.remove("open");
 }
 
 function openCart(){
